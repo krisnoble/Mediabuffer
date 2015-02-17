@@ -5,7 +5,7 @@
  *  @license MIT 
  */ 
 /* 
- *  Buffer an HTML5 media file for 
+ *  Buffer an HTML5 audio/video file for 
  *  (hopefully) uninterrupted playback
  * 
  *  http://github.com/krisnoble/Buffer
@@ -14,59 +14,58 @@
  *  https://github.com/denisnazarov/canplaythrough
  */
 
-var element, 
-	progressCallback, 
-	readyCallback, 
-	loadStartTime = 0, 
-	percentBuffered,
-	previousPercentBuffered = 0;
-
-function buffer(e, p, r) {
+function Buffer(element, progressCallback, readyCallback) {
 	
-	element = e;
-	progressCallback = p;
-	readyCallback = r;
+	this.element = element;
+	this.progressCallback = progressCallback;
+	this.readyCallback = readyCallback;
 	
-	element.setAttribute('data-vol', element.volume); // store for later
-	element.volume = 0; // mute to avoid issues from chromeBugWorkaround()
+	this.loadStartTime = 0; 
+	this.percentBuffered = 0;
+	this.previousPercentBuffered = 0;
 	
-	element.preload = "auto";
+	this.element.setAttribute('data-vol', this.element.volume); // store for later
+	this.element.volume = 0; // mute to avoid issues from chromeBugWorkaround()
 	
-	element.addEventListener('progress', progress, true);
+	this.element.preload = "auto";
+	
+	this.boundProgress = this.progress.bind(this);
+	
+	this.element.addEventListener('progress', this.boundProgress, true);
 }
 
-function progress() {
-	if(loadStartTime === 0) {
-		loadStartTime = new Date().valueOf();
+Buffer.prototype.progress = function() {
+	if(this.loadStartTime === 0) {
+		this.loadStartTime = new Date().valueOf();
 	}
 	
 	var currentTime = new Date().valueOf();
-	var numberOfTimeRangesLoaded = element.buffered.length;
+	var numberOfTimeRangesLoaded = this.element.buffered.length;
 	if(numberOfTimeRangesLoaded > 0) {
-		var duration = element.duration;
-		var secondsLoaded = element.buffered.end(0);
-		var elapsedTime = (currentTime - loadStartTime) / 1000; // in seconds
+		var duration = this.element.duration;
+		var secondsLoaded = this.element.buffered.end(0);
+		var elapsedTime = (currentTime - this.loadStartTime) / 1000; // in seconds
 		var downloadRate = elapsedTime / secondsLoaded;
 		var secondsToLoad = duration - secondsLoaded;
 		var estimatedRemainingDownloadSeconds = secondsToLoad * downloadRate;
 
 		if(secondsLoaded > estimatedRemainingDownloadSeconds) {
-			element.removeEventListener('progress', progress, true);
-			element.volume = element.getAttribute('data-vol'); // restore from muted
-			readyCallback();
+			this.element.removeEventListener('progress', this.boundProgress, true);
+			this.element.volume = this.element.getAttribute('data-vol'); // restore from muted
+			this.readyCallback();
 		} else {
-			percentBuffered = Math.round((secondsLoaded/estimatedRemainingDownloadSeconds) * 100);
-			if(percentBuffered > previousPercentBuffered) {
-				progressCallback(percentBuffered);
-				previousPercentBuffered = percentBuffered;			
+			this.percentBuffered = Math.round((secondsLoaded/estimatedRemainingDownloadSeconds) * 100);
+			if(this.percentBuffered > this.previousPercentBuffered) {
+				this.progressCallback(this.percentBuffered);
+				this.previousPercentBuffered = this.percentBuffered;			
 			}
-			chromeBugWorkaround();
+			this.chromeBugWorkaround();
 		}
 	}
-}
+};
 
-function chromeBugWorkaround() {
-	element.play();  // workaround for Chrome bug
-	element.pause(); // https://code.google.com/p/chromium/issues/detail?id=111281
-	element.currentTime = 0;
-}
+Buffer.prototype.chromeBugWorkaround = function() {
+	this.element.play();  // workaround for Chrome bug
+	this.element.pause(); // https://code.google.com/p/chromium/issues/detail?id=111281
+	this.element.currentTime = 0;
+};

@@ -1,0 +1,7 @@
+/*!  
+ *  buffer.js
+ *  @version 1.0
+ *  @author Kris Noble - http://simianstudios.com
+ *  @license MIT 
+ */
+function Buffer(e,t,r){this.element=e,this.progressCallback=t,this.readyCallback=r,this.loadStartTime=0,this.percentBuffered=0,this.previousPercentBuffered=0,this.element.setAttribute("data-vol",this.element.volume),this.element.volume=0,this.element.preload="auto",this.boundProgress=this.progress.bind(this),this.element.addEventListener("progress",this.boundProgress,!0)}Buffer.prototype.progress=function(){0===this.loadStartTime&&(this.loadStartTime=(new Date).valueOf());var e=(new Date).valueOf(),t=this.element.buffered.length;if(t>0){var r=this.element.duration,s=this.element.buffered.end(0),i=(e-this.loadStartTime)/1e3,n=i/s,o=r-s,h=o*n;s>h?(this.element.removeEventListener("progress",this.boundProgress,!0),this.element.volume=this.element.getAttribute("data-vol"),this.readyCallback()):(this.percentBuffered=Math.round(s/h*100),this.percentBuffered>this.previousPercentBuffered&&(this.progressCallback(this.percentBuffered),this.previousPercentBuffered=this.percentBuffered),this.chromeBugWorkaround())}},Buffer.prototype.chromeBugWorkaround=function(){this.element.play(),this.element.pause(),this.element.currentTime=0};

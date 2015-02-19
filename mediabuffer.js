@@ -5,10 +5,9 @@
  *  @license MIT 
  */ 
 /* 
- *  Buffer an HTML5 audio/video file for 
- *  (hopefully) uninterrupted playback
+ *  Buffer an HTML5 audio/video file for (hopefully) uninterrupted playback.
  * 
- *  http://github.com/krisnoble/Mediabuffer
+ *  https://github.com/krisnoble/Mediabuffer
  * 
  *  Adapted under the MIT license from code by Denis Nazarov:
  *  https://github.com/denisnazarov/canplaythrough
@@ -60,14 +59,16 @@ Mediabuffer.prototype.progress = function() {
 		var secondsToLoad = duration - secondsLoaded;
 		var estimatedRemainingDownloadSeconds = secondsToLoad * downloadRate;
 		
-		if((elapsedTime > 0 || secondsToLoad === 0 ) && secondsLoaded > estimatedRemainingDownloadSeconds) {
+		if((elapsedTime > 0 || secondsToLoad === 0) && secondsLoaded > estimatedRemainingDownloadSeconds) {
 			this.destroy(false);
 			this.readyCallback();
-		} else if (elapsedTime > 0){
-			this.percentBuffered = Math.round((secondsLoaded/estimatedRemainingDownloadSeconds) * 100);
-			if(this.percentBuffered > this.previousPercentBuffered) {
-				this.progressCallback(this.percentBuffered);
-				this.previousPercentBuffered = this.percentBuffered;			
+		} else {
+			if (elapsedTime > 0){
+				this.percentBuffered = Math.round((secondsLoaded/estimatedRemainingDownloadSeconds) * 100);
+				if(this.percentBuffered > this.previousPercentBuffered) {
+					this.progressCallback(this.percentBuffered);
+					this.previousPercentBuffered = this.percentBuffered;			
+				}
 			}
 			this.chromeBugWorkaround();
 		}

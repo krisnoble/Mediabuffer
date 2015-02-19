@@ -17,17 +17,17 @@
 		<meta charset="UTF-8">
 		<title>Mediabuffer Demo</title>
 		<style>
-			* {padding:0; margin: 0; box-sizing: border-box;}
-			body {font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; width:80%; max-width:700px; margin: 0 auto; padding:50px;}
-			audio {display:block; width:600px; max-width: 100%; margin:0 auto; }
-			video {display:block; width:600px; max-width: 100%; height:auto; max-height:100%; margin:0 auto;}
-			div {width:100%; max-width: 100%; margin-top:30px;}
-			.button {display:none; width:auto; padding:10px 20px; color:#fff; background:#393; border-radius: 5px; margin-bottom:20px;}
-			.button:hover {cursor:pointer; background:#3c3;}
-			.button:focus, .button:active {background:#161;}
-			h1 {margin-bottom: 30px; font-weight:normal;}
-			h2 {margin-bottom:20px; font-weight:normal;}
-			progress {display:inline-block; vertical-align: bottom; margin-bottom:20px;}
+			*{padding:0;margin:0;box-sizing:border-box;}
+			body{font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;width:80%;max-width:700px;margin:0 auto;padding:50px;}
+			audio{display:block;width:600px;max-width:100%;margin:0 auto;}
+			video{display:block;width:600px;max-width:100%;height:auto;max-height:100%;margin:0 auto;}
+			div{width:100%;max-width:100%;margin-top:30px;}
+			.button{display:none;width:auto;padding:10px 20px;color:#fff;background:#393;border-radius:5px;margin-bottom:20px;}
+			.button:hover{cursor:pointer;background:#3c3;}
+			.button:focus,.button:active{background:#161;}
+			h1{margin-bottom:30px;font-weight:normal;}
+			h2{margin-bottom:20px;font-weight:normal;}
+			progress{display:inline-block;vertical-align:bottom;margin-bottom:20px;}
 		</style>
 		
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" />

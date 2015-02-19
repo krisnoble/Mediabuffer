@@ -6,6 +6,8 @@
 	N.b. media files are not included in the repo but archive.org has
 	tons of free public domain video and audio for testing purposes
 	
+	If you have issues with caching, change the ?v=1 in the media URLs
+	
 	See it in action at http://static.simianstudios.com/mb
 	
 	More info: https://github.com/krisnoble/Mediabuffer
@@ -40,8 +42,8 @@
 			<h2>Video</h2>
 			<a class="button" id="video-button">Load video</a> <span id="video-progress-container"></span>
 			<video id="video" preload="none" poster="poster.jpg">
-				<source src="example.mp4" type="video/mp4" />
-				<source src="example.ogv" type="video/ogg" />
+				<source src="example.mp4?v=1" type="video/mp4" />
+				<source src="example.ogv?v=1" type="video/ogg" />
 			</video>
 		</div>
 		
@@ -49,8 +51,8 @@
 			<h2>Audio</h2>
 			<a class="button" id="audio-button">Load audio</a> <span id="audio-progress-container"></span>
 			<audio id="audio" controls preload="none">
-				<source src="example.mp3" type="audio/mpeg" />
-				<source src="example.ogg" type="audio/ogg" />
+				<source src="example.mp3?v=1" type="audio/mpeg" />
+				<source src="example.ogg?v=1" type="audio/ogg" />
 			</audio>
 		</div>
 		

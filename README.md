@@ -2,13 +2,15 @@
 
 Buffer HTML5 audio/video for uninterrupted playback.
 
+Provides a workaround for Chrome's incorrect `canplaythrough` behaviour, as well as adding some useful functionality.
+
+###[Demo](http://static.simianstudios.com/mb/)
+
 Native JavaScript, no dependencies.
 
 Released under the MIT license, based on [code by Denis Nazarov](https://github.com/denisnazarov/canplaythrough).
 
 Uses [code by Michael Zaporozhets](http://stackoverflow.com/a/11381730/1646470), based on [detectmobilebrowsers.com by Chad Smith](http://detectmobilebrowsers.com/).
-
-###[Demo](http://static.simianstudios.com/mb/)
 
 ----------
 

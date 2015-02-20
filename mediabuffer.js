@@ -5,7 +5,7 @@
  *  @license MIT 
  */ 
 /* 
- *  Buffer an HTML5 audio/video file for (hopefully) uninterrupted playback.
+ *  Buffer HTML5 audio/video for uninterrupted playback.
  * 
  *  https://github.com/krisnoble/Mediabuffer
  * 

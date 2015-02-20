@@ -53,7 +53,7 @@ mbExample.load();
 ----------
 
 ##Browser Compatibility
-Tested and working in Chrome 40, Firefox 35, Safari 7.1.3 (see notes), Opera 12.16 and Internet Explorer 9+. *Should* work in anything that supports HTML5 media elements, the preload attribute and the progress media event. Mobile browsers will fail gracefully by calling the `readyCallback` immediately due to the lack of preloading in the major mobile browsers.
+Tested and working in Chrome 40, Firefox 35, Safari 7.1.3 (see notes), Opera 12.16 and Internet Explorer 9+. *Should* work in anything that supports HTML5 media elements, the `preload` attribute and the `progress` media event. Mobile browsers will fail gracefully by calling the `readyCallback` immediately due to the lack of preloading in the major mobile browsers.
 
 ###Notes
 * Safari won't call the `progressCallback` if the buffer time is short, but it will call the `readyCallback` as expected. 

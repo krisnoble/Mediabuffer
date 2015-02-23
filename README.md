@@ -1,14 +1,16 @@
 #Mediabuffer
 
-Buffer an HTML5 audio/video file for (hopefully) uninterrupted playback.
+Buffer HTML5 audio/video for uninterrupted playback.
+
+Provides a workaround for Chrome's incorrect `canplaythrough` behaviour, as well as adding some useful functionality.
+
+###[Demo](http://static.simianstudios.com/mb/)
 
 Native JavaScript, no dependencies.
 
 Released under the MIT license, based on [code by Denis Nazarov](https://github.com/denisnazarov/canplaythrough).
 
 Uses [code by Michael Zaporozhets](http://stackoverflow.com/a/11381730/1646470), based on [detectmobilebrowsers.com by Chad Smith](http://detectmobilebrowsers.com/).
-
-###[Demo](http://static.simianstudios.com/mb/)
 
 ----------
 
@@ -51,7 +53,7 @@ mbExample.load();
 ----------
 
 ##Browser Compatibility
-Tested and working in Chrome 40, Firefox 35, Safari 7.1.3 (see notes), Opera 12.16 and Internet Explorer 9+. *Should* work in anything that supports HTML5 media elements, the preload attribute and the progress media event. Mobile browsers will fail gracefully by calling the `readyCallback` immediately due to the lack of preloading in the major mobile browsers.
+Tested and working in Chrome 40, Firefox 35, Safari 7.1.3 (see notes), Opera 12.16 and Internet Explorer 9+. *Should* work in anything that supports HTML5 media elements, the `preload` attribute and the `progress` media event. Mobile browsers will fail gracefully by calling the `readyCallback` immediately due to the lack of preloading in the major mobile browsers.
 
 ###Notes
 * Safari won't call the `progressCallback` if the buffer time is short, but it will call the `readyCallback` as expected. 
@@ -60,4 +62,5 @@ Tested and working in Chrome 40, Firefox 35, Safari 7.1.3 (see notes), Opera 12.
 ----------
 
 ##Known issues
+* Mediabuffer works by measuring the element's download progress and estimating when it can be played back without further buffering. If a user's average download rate drops significantly after buffering completes they may still experience buffering towards the end of playback.
 * Chrome has [an annoying ~~bug~~feature](https://code.google.com/p/chromium/issues/detail?id=111281) that means it won't buffer past a certain point without a [workaround](https://code.google.com/p/chromium/issues/detail?id=111281#c82). That's OK except that if you have controls visible they won't work as the user may expect and it can cause them to flicker between states. If you want to enable controls your best bet is to have them hidden initially and then show them in your `readyCallback`. For the best user feedback, you could replace your controls with an indicator of the loading status by using your progress callback.

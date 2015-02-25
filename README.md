@@ -2,7 +2,7 @@
 
 Buffer HTML5 audio/video for uninterrupted playback.
 
-Provides a workaround for Chrome's incorrect `canplaythrough` behaviour, as well as adding some useful functionality.
+Provides a workaround for Chrome's incorrect `canplaythrough` behaviour and adds some other useful functionality.
 
 ###[Demo](http://static.simianstudios.com/mb/)
 
@@ -16,7 +16,7 @@ Uses [code by Michael Zaporozhets](http://stackoverflow.com/a/11381730/1646470),
 
 ##Usage
 ```javascript
-var foo = new Mediabuffer(element, progressCallback, readyCallback[, disableMobileCheck]);
+var foo = new Mediabuffer(element, progressCallback, readyCallback[, disableMobileCheck[, forceFullDownload]]);
 foo.load();
 ```
 
@@ -31,6 +31,9 @@ Function to run when the file is buffered. You'll probably want to use the eleme
 
 ###disableMobileCheck
 Optional boolean to disable the check for mobile browsers. Defaults to `false`.
+
+###forceFullDownload
+Optional boolean to force the browser to buffer the whole media file before calling the `readyCallback`. Defaults to `false`.
 
 ----------
 
@@ -62,5 +65,12 @@ Tested and working in Chrome 40, Firefox 35, Safari 7.1.3 (see notes), Opera 12.
 ----------
 
 ##Known issues
-* Mediabuffer works by measuring the element's download progress and estimating when it can be played back without further buffering. If a user's average download rate drops significantly after buffering completes they may still experience buffering towards the end of playback.
-* Chrome has [an annoying ~~bug~~feature](https://code.google.com/p/chromium/issues/detail?id=111281) that means it won't buffer past a certain point without a [workaround](https://code.google.com/p/chromium/issues/detail?id=111281#c82). That's OK except that if you have controls visible they won't work as the user may expect and it can cause them to flicker between states. If you want to enable controls your best bet is to have them hidden initially and then show them in your `readyCallback`. For the best user feedback, you could replace your controls with an indicator of the loading status by using your progress callback.
+* Mediabuffer works by measuring the element's download progress and estimating when it can be played back without further buffering. If a user's average download rate drops significantly after buffering completes they may still experience buffering towards the end of playback. If it's absolutely imperative that there is no chance of buffering, use the `forceFullDownload` option.
+* Chrome has [a ~~bug~~feature](https://code.google.com/p/chromium/issues/detail?id=111281) that means it won't buffer past a certain point without a [workaround](https://code.google.com/p/chromium/issues/detail?id=111281#c82). That's OK except that if you have controls visible they won't work as the user may expect and it can cause them to flicker between states. If you want to enable controls your best bet is to have them hidden initially and then show them in your `readyCallback`. For the best user feedback, you could replace your controls with an indicator of the loading status by using your `progressCallback`.
+
+----------
+
+##Changelog
+v1.1 - added `forceFullDownload` option.
+
+v1.0 - initial release.

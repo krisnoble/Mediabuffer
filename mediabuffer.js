@@ -1,6 +1,6 @@
 /*!  
  *  mediabuffer.js
- *  @version 1.0
+ *  @version 1.1
  *  @author Kris Noble - http://simianstudios.com
  *  @license MIT 
  */ 
@@ -16,11 +16,12 @@
  *  based on http://detectmobilebrowsers.com/ by Chad Smith
  */
 
-function Mediabuffer(element, progressCallback, readyCallback, disableMobileCheck) {
+function Mediabuffer(element, progressCallback, readyCallback, disableMobileCheck, forceFullDownload) {
 	this.element = element;
 	this.progressCallback = progressCallback;
 	this.readyCallback = readyCallback;
 	this.disableMobileCheck = typeof disableMobileCheck !== 'undefined' ? disableMobileCheck : false;
+	this.forceFullDownload = typeof forceFullDownload !== 'undefined' ? forceFullDownload : false;
 
 	this.loadStartTime = 0; 
 	this.percentBuffered = 0;
@@ -37,7 +38,7 @@ Mediabuffer.prototype.load = function() {
 	
 		this.element.preload = "auto";
 		this.element.load();
-	
+
 		this.boundProgress = this.progress.bind(this);
 	
 		this.element.addEventListener('progress', this.boundProgress, true);
@@ -58,13 +59,14 @@ Mediabuffer.prototype.progress = function() {
 		var downloadRate = elapsedTime / secondsLoaded;
 		var secondsToLoad = duration - secondsLoaded;
 		var estimatedRemainingDownloadSeconds = secondsToLoad * downloadRate;
-		
-		if((elapsedTime > 0 || secondsToLoad === 0) && secondsLoaded > estimatedRemainingDownloadSeconds) {
+				
+		if(secondsToLoad === 0 || (elapsedTime > 0 && secondsLoaded > estimatedRemainingDownloadSeconds && !this.forceFullDownload)) {
 			this.destroy(false);
 			this.readyCallback();
 		} else {
 			if (elapsedTime > 0){
-				this.percentBuffered = Math.round((secondsLoaded/estimatedRemainingDownloadSeconds) * 100);
+				this.percentBuffered = this.forceFullDownload ? Math.round((secondsLoaded/duration) * 100) : Math.round((secondsLoaded/estimatedRemainingDownloadSeconds) * 100);
+				
 				if(this.percentBuffered > this.previousPercentBuffered) {
 					this.progressCallback(this.percentBuffered);
 					this.previousPercentBuffered = this.percentBuffered;			

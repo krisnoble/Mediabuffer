@@ -2,7 +2,7 @@
 
 Buffer HTML5 audio/video for uninterrupted playback.
 
-Provides a workaround for Chrome's incorrect `canplaythrough` behaviour and adds some other useful functionality.
+Provides a workaround for [Chrome's incorrect `canplaythrough` behaviour](https://code.google.com/p/chromium/issues/detail?id=73609) and adds some other useful functionality.
 
 ###[Demo](http://static.simianstudios.com/mb/)
 

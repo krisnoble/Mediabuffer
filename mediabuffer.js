@@ -1,6 +1,6 @@
 /*!  
  *  mediabuffer.js
- *  @version 1.1
+ *  @version 1.1.1
  *  @author Kris Noble - http://simianstudios.com
  *  @license MIT 
  */ 
@@ -86,8 +86,11 @@ Mediabuffer.prototype.chromeBugWorkaround = function() {
 
 Mediabuffer.prototype.destroy = function(stopPreloading) {
 	this.element.removeEventListener('progress', this.boundProgress, true);
-	this.element.volume = this.element.getAttribute('data-vol'); // restore from muted
-	this.element.removeAttribute('data-vol');
+
+    if(this.element.hasAttribute('data-vol')) {
+        this.element.volume = this.element.getAttribute('data-vol'); // restore from muted
+        this.element.removeAttribute('data-vol');
+    }
 	
 	if(stopPreloading) {
 		this.element.preload = "none";
